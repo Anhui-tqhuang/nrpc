@@ -12,8 +12,8 @@ import (
 
 	"github.com/nats-rpc/nrpc"
 
+	descriptor "github.com/golang/protobuf/protoc-gen-go/descriptor"
 	"google.golang.org/protobuf/proto"
-	descriptor "google.golang.org/protobuf/types/descriptorpb"
 	plugin "google.golang.org/protobuf/types/pluginpb"
 )
 
@@ -264,6 +264,7 @@ var funcMap = template.FuncMap{
 		var imports = make(map[string]string)
 		for _, sd := range fd.GetService() {
 			for _, md := range sd.GetMethod() {
+				log.Println(md.GetInputType())
 				goPkg, _ := getGoType(md.GetInputType())
 				pkgImportName := getPkgImportName(goPkg)
 				if pkgImportName != "" {
